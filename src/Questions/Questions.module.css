@@ -1,0 +1,68 @@
+.CircularProgressbar {
+    width: 100px;
+    margin-bottom: 30px;
+}
+
+.CircularProgressbar .CircularProgressbar-path {
+    stroke: #cccc00;
+}
+
+.CircularProgressbar .CircularProgressbar-text {
+    fill: #000;
+    font-weight: bold;
+}
+
+.Questions-game-bg h1{
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* .yellow-btn{
+    text-transform: uppercase;
+    width: 100%;
+    min-height: 70px;
+    font-weight: bold;
+} */
+
+.Questions-game-bg{
+    width: 100%;
+}
+
+audio{
+    display: none;
+}
+
+.wrong-answer {
+
+}
+
+.correct-answer {
+    
+}
+
+.yellowButton{
+    background-color: #cccc00 !important;
+    border: 2px solid transparent;
+}
+
+.greenButton{
+    background-color: #28ab44 !important;
+    border: 2px solid transparent;
+}
+
+.redButton{
+    background-color: #97183a !important;
+    border: 2px solid transparent;
+}
+
+@media screen and (max-width: 767px) {
+
+.Questions-game-bg h1{
+    font-size: 30px;
+}
+
+.Questions-game-bg .yellow-btn{
+    min-height: 50px !important;
+}
+
+}

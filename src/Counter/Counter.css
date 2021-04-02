@@ -1,0 +1,16 @@
+.easygame-bg h1{
+    font-weight:700;
+}
+
+.counting-circle{
+    background-color: #cccc00;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}

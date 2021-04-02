@@ -1,0 +1,109 @@
+.resultGameBg{
+    width: 100%;
+    margin:160px 0 60px;
+    
+}
+
+audio{
+    display: inline-block;
+}
+
+audio:focus{
+    outline: none;
+}
+
+.h1{
+    font-weight: bold;
+    margin-top: 200px;
+}
+
+.h4{
+    font-weight: 700;
+}
+
+.resultInnerBg{
+    background: #cccc00;
+    width: 100%;
+    min-height: 100%;
+    padding: 15px;
+    border-radius: 4px;
+    padding-top: 20px;
+}
+
+.countingNumber{
+    text-align: left;
+}
+
+.span{
+    color: grey;
+    font-weight: 700;
+    font-size: 23px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 11px;
+    width: 32px;
+}
+
+.playArea{
+    background: #ddd;
+    padding: 2px 15px;
+    color: grey;
+    display: inline-block;
+    font-size: 25px;
+    width: 86%;
+    margin-left: 12px;
+    font-weight: 700;
+    border-radius: 4px;
+}
+
+.h5{
+    font-size: 22px;
+    font-weight: 700;
+    color: grey;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.greenColor{
+    color: #28ab44;
+    text-align: left;
+}
+
+.redColor{
+    color: #97183a;
+    text-align: left;
+}
+
+@media screen and (max-width: 767px) {
+
+    .resultInnerBg {
+        text-align: center;
+        
+    }
+
+    .playArea{
+        text-align: left;
+    }
+
+    .ResultGameGg h1{
+        margin-top: 300px;
+    }
+
+.playArea {
+    width: 100%;
+    display: block;
+    margin-left: 0;
+}
+
+.countingNumber {
+    text-align: center;
+}
+
+.resultInnerBg h5{
+    text-align: center;
+}
+
+}

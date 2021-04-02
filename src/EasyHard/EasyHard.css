@@ -1,0 +1,17 @@
+
+/* .easyhard-game-bg a{
+    float: left;
+} */
+
+@media screen and (max-width: 767px) {
+
+    .easyhard-game-bg .yellow-btn:first-child{
+        margin-right: 15px;
+    }
+
+    .easyhard-game-bg .yellow-btn{
+        width: 140px;
+    }
+    
+    }
+
