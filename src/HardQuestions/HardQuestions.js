@@ -35,7 +35,21 @@ function HardQuestions() {
         let timer = setTimeout(() => {
             let newValue = value;
             if (value == 20) {
-                refs.current.pause();
+                // refs.current.pause();
+                let obj = {
+                    correct: false,
+                    audio: birds.bird.audio,
+                    name: birds.bird.name
+                }
+                let array = JSON.parse(sessionStorage.getItem('result'))
+                if (array) {
+                    array[question] = obj;
+                    sessionStorage.setItem('result', JSON.stringify(array))
+                } else {
+                    let newArray = [obj]
+                    sessionStorage.setItem('result', JSON.stringify(newArray))
+                }
+                gotoNext();
             }
             else {
                 setValue(++newValue)

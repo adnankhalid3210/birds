@@ -19,11 +19,15 @@ import wrongSound from '../wrong-sound.wav';
 function Questions(props) {
     let history = useHistory();
     const location = useLocation();
-    useEffect(() => {
-        return () => {
-            console.log("cleaned up");
-        };
-    }, []);
+
+    const randomGenerator = (randomIndexes) => {
+        let random = Math.floor(Math.random() * (19 - 0) + 0);
+        if (randomIndexes.includes(random)) {
+            randomGenerator(randomIndexes);
+        } else {
+            randomIndexes.push(random)
+        }
+    }
 
     useEffect(() => {
         let prev = sessionStorage.getItem('prev')
@@ -41,10 +45,7 @@ function Questions(props) {
 
     const [dataAxios, setdataAxios] = useState(null);
     const [birds, setBirds] = useState(null)
-    // let birds = {
-    //     bird:
-    //     birds: 
-    // }
+
     const [audio, setAudio] = useState(null)
     const [color, setColor] = useState(null)
     const [selection, setSelection] = useState({
@@ -53,12 +54,20 @@ function Questions(props) {
     })
     const [result, setResult] = useState([])
     const [hold, setHold] = useState(false)
+    const [randomIndexes, setRandomIndexes] = useState('')
+
 
     const url = 'https://birds-app.herokuapp.com/api/get-question/';
     const refs = useRef()
 
     useEffect(() => {
-        axios.get(`${url}${question}`)
+        let randomIndexes = [];
+        for (let i = 0; i <= 9; i++) {
+            randomGenerator(randomIndexes);
+        }
+        console.log(randomIndexes)
+        setRandomIndexes(randomIndexes)
+        axios.get(`${url}${randomIndexes[question]}`)
             .then(res => {
                 setBirds({
                     bird: res.data.data.question,
@@ -73,7 +82,21 @@ function Questions(props) {
         let timer = setTimeout(() => {
             let newValue = value;
             if (value == 20) {
-                refs.current.pause();
+                // refs.current.pause();
+                let obj = {
+                    correct: false,
+                    audio: birds.bird.audio,
+                    name: birds.bird.name
+                }
+                let array = JSON.parse(sessionStorage.getItem('result'))
+                if (array) {
+                    array[question] = obj;
+                    sessionStorage.setItem('result', JSON.stringify(array))
+                } else {
+                    let newArray = [obj]
+                    sessionStorage.setItem('result', JSON.stringify(newArray))
+                }
+                gotoNext();
             }
             else {
                 setValue(++newValue)
@@ -85,12 +108,11 @@ function Questions(props) {
 
     const gotoNext = () => {
         setValue(0)
-
         if (question <= 8) {
             let updatedQuestion = question
             updatedQuestion++;
             setQuestion(updatedQuestion)
-            axios.get(`${url}${updatedQuestion}`)
+            axios.get(`${url}${randomIndexes[updatedQuestion]}`)
                 .then(res => {
                     setSelection({
                         correctIndex: -1,
@@ -130,7 +152,7 @@ function Questions(props) {
         let obj = {
             correct: adnan.correct,
             audio: birds.bird.audio,
-            name: adnan.name
+            name: birds.bird.name
         }
         let array = JSON.parse(sessionStorage.getItem('result'))
         if (array) {
@@ -148,12 +170,12 @@ function Questions(props) {
             onTrackChange(rightSound)
             setTimeout(() => {
                 gotoNext();
-            }, 2000); 
+            }, 2000);
         } else {
             onTrackChange(wrongSound)
             setTimeout(() => {
                 gotoNext();
-            }, 2000); 
+            }, 2000);
         }
     }
 

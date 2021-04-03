@@ -2,22 +2,29 @@ import react, { useEffect, useState } from 'react';
 import ResultCss from '../Result/Result.module.css'
 import {
     Link
-  } from "react-router-dom";
+} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function Result() {
     const [recieveItems, setRecievceItems] = useState([]);
     const [correctAnswers, setCorrectAnswers] = useState(0)
+    let history = useHistory();
 
     useEffect(() => {
         let result = JSON.parse(sessionStorage.getItem('result'))
-        let correct = 0;
-        result.map(x => {
-            if(x.correct) {
-                correct++;
-            }
-        })
-        setCorrectAnswers(correct)
-        setRecievceItems(result)
+        if (result) {
+            let correct = 0;
+            result.map(x => {
+                if (x.correct) {
+                    correct++;
+                }
+            })
+            setCorrectAnswers(correct)
+            setRecievceItems(result)
+        } else {
+            history.push('/easy-hard')
+        }
+        return () => sessionStorage.clear();
     }, [])
 
 
@@ -52,12 +59,12 @@ function Result() {
                             )}
                         </div>
                     </div>
-                    
+
                 </div>
                 <div className="row justify-content-center">
-                <div className="col-md-3 mt-5">
+                    <div className="col-md-3 mt-5">
                         <Link to="/" className="yellow-btn">
-                                     Restart           
+                            Restart
                         </Link>
                     </div>
                 </div>
