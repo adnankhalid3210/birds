@@ -26,6 +26,17 @@ function HardQuestions() {
         correctIndex: -1,
         choosenIndex: -1
     })
+    const [randomIndexes, setRandomIndexes] = useState('')
+
+
+    const randomGenerator = (randomIndexes) => {
+        let random = Math.floor(Math.random() * (19 - 0) + 0);
+        if (randomIndexes.includes(random)) {
+            randomGenerator(randomIndexes);
+        } else {
+            randomIndexes.push(random)
+        }
+    }
 
     const url = 'https://birds-app.herokuapp.com/api/get-question/';
     const refs = useRef()
@@ -70,7 +81,13 @@ function HardQuestions() {
     }, []);
 
     useEffect(() => {
-        axios.get(`${url}${question}`)
+        let randomIndexes = [];
+        for (let i = 0; i <= 9; i++) {
+            randomGenerator(randomIndexes);
+        }
+        console.log(randomIndexes)
+        setRandomIndexes(randomIndexes)
+        axios.get(`${url}${randomIndexes[question]}`)
             .then(res => {
                 setBirds({
                     bird: res.data.data.question,
@@ -89,7 +106,7 @@ function HardQuestions() {
             let updatedQuestion = question
             updatedQuestion++;
             setQuestion(updatedQuestion)
-            axios.get(`${url}${updatedQuestion}`)
+            axios.get(`${url}${randomIndexes[updatedQuestion]}`)
                 .then(res => {
                     setBirds({
                         bird: res.data.data.question,
