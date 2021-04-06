@@ -11,10 +11,10 @@ function Result() {
 
     useEffect(() => {
         let result = JSON.parse(sessionStorage.getItem('result'))
-        if(result) {
+        if (result) {
             let correct = 0;
             result.map(x => {
-                if(x.correct) {
+                if (x.correct) {
                     correct++;
                 }
             })
@@ -23,6 +23,7 @@ function Result() {
         } else {
             history.push('/easy-hard')
         }
+        return () => sessionStorage.clear();
     }, [])
 
 
@@ -57,12 +58,12 @@ function Result() {
                             )}
                         </div>
                     </div>
-                    
+
                 </div>
                 <div className="row justify-content-center">
-                <div className="col-md-3 mt-5">
+                    <div className="col-md-3 mt-5">
                         <Link to="/" className="yellow-btn">
-                                     Restart           
+                            Restart
                         </Link>
                     </div>
                 </div>

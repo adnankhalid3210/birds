@@ -18,6 +18,16 @@ import wrongSound from '../wrong-sound.wav';
 
 function Questions(props) {
     let history = useHistory();
+    const location = useLocation();
+
+    const randomGenerator = (randomIndexes) => {
+        let random = Math.floor(Math.random() * (19 - 0) + 0);
+        if (randomIndexes.includes(random)) {
+            randomGenerator(randomIndexes);
+        } else {
+            randomIndexes.push(random)
+        }
+    }
 
     useEffect(() => {
         let prev = sessionStorage.getItem('prev')
@@ -34,6 +44,8 @@ function Questions(props) {
     const [question, setQuestion] = useState(0)
     const [birds, setBirds] = useState(null)
     const [audio, setAudio] = useState(null)
+    const [isDisabled, setIsDisabled] = useState(false)
+
 
     const [selection, setSelection] = useState({
         correctIndex: -1,
@@ -42,12 +54,20 @@ function Questions(props) {
 
     const [result, setResult] = useState([])
     const [hold, setHold] = useState(false)
+    const [randomIndexes, setRandomIndexes] = useState('')
+
 
     const url = 'https://birds-app.herokuapp.com/api/get-question/';
     const refs = useRef()
 
     useEffect(() => {
-        axios.get(`${url}${question}`)
+        let randomIndexes = [];
+        for (let i = 0; i <= 9; i++) {
+            randomGenerator(randomIndexes);
+        }
+        console.log(randomIndexes)
+        setRandomIndexes(randomIndexes)
+        axios.get(`${url}${randomIndexes[question]}`)
             .then(res => {
                 setBirds({
                     bird: res.data.data.question,
@@ -62,7 +82,21 @@ function Questions(props) {
         let timer = setTimeout(() => {
             let newValue = value;
             if (value == 20) {
-                refs.current.pause();
+                // refs.current.pause();
+                let obj = {
+                    correct: false,
+                    audio: birds.bird.audio,
+                    name: birds.bird.name
+                }
+                let array = JSON.parse(sessionStorage.getItem('result'))
+                if (array) {
+                    array[question] = obj;
+                    sessionStorage.setItem('result', JSON.stringify(array))
+                } else {
+                    let newArray = [obj]
+                    sessionStorage.setItem('result', JSON.stringify(newArray))
+                }
+                gotoNext();
             }
             else {
                 setValue(++newValue)
@@ -74,13 +108,13 @@ function Questions(props) {
 
     const gotoNext = () => {
         setValue(0)
-
         if (question <= 8) {
             let updatedQuestion = question
             updatedQuestion++;
             setQuestion(updatedQuestion)
-            axios.get(`${url}${updatedQuestion}`)
+            axios.get(`${url}${randomIndexes[updatedQuestion]}`)
                 .then(res => {
+                    setIsDisabled(false)
                     setSelection({
                         correctIndex: -1,
                         choosenIndex: -1
@@ -116,10 +150,11 @@ function Questions(props) {
     }
 
     const answerChoosen = (adnan) => {
+        setIsDisabled(true)
         let obj = {
             correct: adnan.correct,
             audio: birds.bird.audio,
-            name: adnan.name
+            name: birds.bird.name
         }
         let array = JSON.parse(sessionStorage.getItem('result'))
         if (array) {
@@ -137,12 +172,12 @@ function Questions(props) {
             onTrackChange(rightSound)
             setTimeout(() => {
                 gotoNext();
-            }, 2000); 
+            }, 2000);
         } else {
             onTrackChange(wrongSound)
             setTimeout(() => {
                 gotoNext();
-            }, 2000); 
+            }, 2000);
         }
     }
 
@@ -171,6 +206,7 @@ function Questions(props) {
 
                         <div className="col-md-3 mb-3">
                             <button
+                                disabled={isDisabled}
                                 onClick={() => answerChoosen(birds.birds[0], 0)}
                                 className={(selection.choosenIndex != -1 && (birds.birds[0].correct || selection.choosenIndex == birds.birds[0].index)) ? (birds.birds[0].correct ? QuestionsCss.greenButton : QuestionsCss.redButton) : QuestionsCss.yellowButton}
                                 //     className={color.green? 'greenButton':'yellow-btn'
@@ -182,6 +218,8 @@ function Questions(props) {
                         </div>
                         <div className="col-md-3 mb-3">
                             <button
+                                disabled={isDisabled}
+
                                 onClick={() => answerChoosen(birds.birds[1], 1)}
                                 className={(selection.choosenIndex != -1 && (birds.birds[1].correct || selection.choosenIndex == birds.birds[1].index)) ? (birds.birds[1].correct ? QuestionsCss.greenButton : QuestionsCss.redButton) : QuestionsCss.yellowButton}
                                 style={styled}
@@ -193,6 +231,8 @@ function Questions(props) {
                     <div className="row justify-content-center">
                         <div className="col-md-3 mb-3">
                             <button
+                                disabled={isDisabled}
+
                                 type="button"
                                 onClick={() => answerChoosen(birds.birds[2], 2)}
                                 className={(selection.choosenIndex != -1 && (birds.birds[2].correct || selection.choosenIndex == birds.birds[2].index)) ? (birds.birds[2].correct ? QuestionsCss.greenButton : QuestionsCss.redButton) : QuestionsCss.yellowButton}
@@ -204,6 +244,8 @@ function Questions(props) {
                         </div>
                         <div className="col-md-3 mb-3">
                             <button
+                                disabled={isDisabled}
+
                                 type="button"
 
                                 onClick={() => answerChoosen(birds.birds[3], 3)}

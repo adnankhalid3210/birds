@@ -6,6 +6,7 @@
 
 audio{
     display: inline-block;
+    width: 100%;
 }
 
 audio:focus{
@@ -78,6 +79,11 @@ audio:focus{
 }
 
 @media screen and (max-width: 767px) {
+
+    .resultGameBg {
+        height: 100vh !important;
+        margin: 60px 0;
+    }
 
     .resultInnerBg {
         text-align: center;

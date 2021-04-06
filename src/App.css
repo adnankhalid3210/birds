@@ -48,4 +48,15 @@ body{
     float: none  !important;
     margin-bottom: 20px;
 }
+
+.Result_h1__26SFl {
+  margin-top: 0 !important;
+}
+html{
+  width: auto !important;
+  height: auto !important;
+}
+body{
+  height: 100vh;
+}
 }

@@ -26,6 +26,17 @@ function HardQuestions() {
         correctIndex: -1,
         choosenIndex: -1
     })
+    const [randomIndexes, setRandomIndexes] = useState('')
+
+
+    const randomGenerator = (randomIndexes) => {
+        let random = Math.floor(Math.random() * (19 - 0) + 0);
+        if (randomIndexes.includes(random)) {
+            randomGenerator(randomIndexes);
+        } else {
+            randomIndexes.push(random)
+        }
+    }
 
     const url = 'https://birds-app.herokuapp.com/api/get-question/';
     const refs = useRef()
@@ -35,7 +46,21 @@ function HardQuestions() {
         let timer = setTimeout(() => {
             let newValue = value;
             if (value == 20) {
-                refs.current.pause();
+                // refs.current.pause();
+                let obj = {
+                    correct: false,
+                    audio: birds.bird.audio,
+                    name: birds.bird.name
+                }
+                let array = JSON.parse(sessionStorage.getItem('result'))
+                if (array) {
+                    array[question] = obj;
+                    sessionStorage.setItem('result', JSON.stringify(array))
+                } else {
+                    let newArray = [obj]
+                    sessionStorage.setItem('result', JSON.stringify(newArray))
+                }
+                gotoNext();
             }
             else {
                 setValue(++newValue)
@@ -56,7 +81,13 @@ function HardQuestions() {
     }, []);
 
     useEffect(() => {
-        axios.get(`${url}${question}`)
+        let randomIndexes = [];
+        for (let i = 0; i <= 9; i++) {
+            randomGenerator(randomIndexes);
+        }
+        console.log(randomIndexes)
+        setRandomIndexes(randomIndexes)
+        axios.get(`${url}${randomIndexes[question]}`)
             .then(res => {
                 setBirds({
                     bird: res.data.data.question,
@@ -75,7 +106,7 @@ function HardQuestions() {
             let updatedQuestion = question
             updatedQuestion++;
             setQuestion(updatedQuestion)
-            axios.get(`${url}${updatedQuestion}`)
+            axios.get(`${url}${randomIndexes[updatedQuestion]}`)
                 .then(res => {
                     setBirds({
                         bird: res.data.data.question,
@@ -137,6 +168,12 @@ function HardQuestions() {
         display: 'none'
     }
 
+    const enterPressed = (event) => {
+        if (event.key === 'Enter') {
+            clickHandler()
+          }
+    }
+
     return (
         <div className="HardQuestions-game-bg">
             {audio ? <Fragment> <audio controls autoplay="true" allow="autoplay" ref={refs} style={audioStyle}>
@@ -155,7 +192,7 @@ function HardQuestions() {
                     </div>
                     <div className="row justify-content-center">
                         <div className="col-lg-6">
-                            <input type="text" name='name' value={name} onChange={changeHandler} className="input-field" />
+                            <input type="text" name='name' value={name} onChange={changeHandler} onKeyDown={enterPressed} className="input-field" />
                             <button type="submit" className="yellow-btn mt-4" onClick={() => clickHandler()}>Next</button>
                         </div>
                         <div className="col-lg-12 mt-3">
