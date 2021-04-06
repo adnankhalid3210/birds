@@ -18,12 +18,6 @@ import wrongSound from '../wrong-sound.wav';
 
 function Questions(props) {
     let history = useHistory();
-    const location = useLocation();
-    useEffect(() => {
-        return () => {
-            console.log("cleaned up");
-        };
-    }, []);
 
     useEffect(() => {
         let prev = sessionStorage.getItem('prev')
@@ -38,19 +32,14 @@ function Questions(props) {
 
     const [value, setValue] = useState(0);
     const [question, setQuestion] = useState(0)
-
-    const [dataAxios, setdataAxios] = useState(null);
     const [birds, setBirds] = useState(null)
-    // let birds = {
-    //     bird:
-    //     birds: 
-    // }
     const [audio, setAudio] = useState(null)
-    const [color, setColor] = useState(null)
+
     const [selection, setSelection] = useState({
         correctIndex: -1,
         choosenIndex: -1
     })
+
     const [result, setResult] = useState([])
     const [hold, setHold] = useState(false)
 
@@ -126,7 +115,7 @@ function Questions(props) {
         }
     }
 
-    const answerChoosen = (adnan, index) => {
+    const answerChoosen = (adnan) => {
         let obj = {
             correct: adnan.correct,
             audio: birds.bird.audio,

@@ -1,23 +1,28 @@
 import react, { useEffect, useState } from 'react';
 import ResultCss from '../Result/Result.module.css'
 import {
-    Link
+    Link, useHistory
   } from "react-router-dom";
 
 function Result() {
     const [recieveItems, setRecievceItems] = useState([]);
     const [correctAnswers, setCorrectAnswers] = useState(0)
+    let history = useHistory();
 
     useEffect(() => {
         let result = JSON.parse(sessionStorage.getItem('result'))
-        let correct = 0;
-        result.map(x => {
-            if(x.correct) {
-                correct++;
-            }
-        })
-        setCorrectAnswers(correct)
-        setRecievceItems(result)
+        if(result) {
+            let correct = 0;
+            result.map(x => {
+                if(x.correct) {
+                    correct++;
+                }
+            })
+            setCorrectAnswers(correct)
+            setRecievceItems(result)
+        } else {
+            history.push('/easy-hard')
+        }
     }, [])
 
 
