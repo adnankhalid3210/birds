@@ -14,7 +14,7 @@ import wrongSound from '../wrong-sound.wav';
 function HardQuestions() {
 
     let history = useHistory();
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(20);
     const [name, setName] = useState('');
     const [birds, setBirds] = useState(null)
     const [audio, setAudio] = useState(null)
@@ -27,6 +27,7 @@ function HardQuestions() {
         choosenIndex: -1
     })
     const [randomIndexes, setRandomIndexes] = useState('')
+    const [isDisabled, setIsDisabled] = useState(false)
 
 
     const randomGenerator = (randomIndexes) => {
@@ -45,7 +46,7 @@ function HardQuestions() {
         console.log(value)
         let timer = setTimeout(() => {
             let newValue = value;
-            if (value == 20) {
+            if (value == 0) {
                 // refs.current.pause();
                 let obj = {
                     correct: false,
@@ -63,7 +64,7 @@ function HardQuestions() {
                 gotoNext();
             }
             else {
-                setValue(++newValue)
+                setValue(--newValue)
             }
         }, 1000);
         return () => clearTimeout(timer);
@@ -100,14 +101,14 @@ function HardQuestions() {
     }, [])
 
     const gotoNext = () => {
-        setValue(0)
-
+        setValue(20)
         if (question <= 8) {
             let updatedQuestion = question
             updatedQuestion++;
             setQuestion(updatedQuestion)
             axios.get(`${url}${randomIndexes[updatedQuestion]}`)
                 .then(res => {
+                    setIsDisabled(false)
                     setBirds({
                         bird: res.data.data.question,
                         birds: res.data.data.options
@@ -137,6 +138,7 @@ function HardQuestions() {
     }
 
     const clickHandler = () => {
+        setIsDisabled(true)
         let obj = {
             correct: birds.bird.name.toLowerCase() == name.toLowerCase(),
             audio: birds.bird.audio,
@@ -171,7 +173,7 @@ function HardQuestions() {
     const enterPressed = (event) => {
         if (event.key === 'Enter') {
             clickHandler()
-          }
+        }
     }
 
     return (
@@ -192,8 +194,9 @@ function HardQuestions() {
                     </div>
                     <div className="row justify-content-center">
                         <div className="col-lg-6">
-                            <input type="text" name='name' value={name} onChange={changeHandler} onKeyDown={enterPressed} className="input-field" />
-                            <button type="submit" className="yellow-btn mt-4" onClick={() => clickHandler()}>Next</button>
+
+                            <input disabled={isDisabled} type="text" name='name' value={name} onChange={changeHandler} onKeyDown={enterPressed} className="input-field" />
+                            <button disabled={isDisabled} type="submit" className="yellow-btn mt-4" onClick={() => clickHandler()}>Next</button>
                         </div>
                         <div className="col-lg-12 mt-3">
                         </div>

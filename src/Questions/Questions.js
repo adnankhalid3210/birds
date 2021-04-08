@@ -40,7 +40,7 @@ function Questions(props) {
 
     }, []);
 
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(20);
     const [question, setQuestion] = useState(0)
     const [birds, setBirds] = useState(null)
     const [audio, setAudio] = useState(null)
@@ -81,7 +81,7 @@ function Questions(props) {
         console.log(value)
         let timer = setTimeout(() => {
             let newValue = value;
-            if (value == 20) {
+            if (value == 0) {
                 // refs.current.pause();
                 let obj = {
                     correct: false,
@@ -99,7 +99,7 @@ function Questions(props) {
                 gotoNext();
             }
             else {
-                setValue(++newValue)
+                setValue(--newValue)
             }
         }, 1000);
         return () => clearTimeout(timer);
@@ -107,7 +107,7 @@ function Questions(props) {
 
 
     const gotoNext = () => {
-        setValue(0)
+        setValue(20)
         if (question <= 8) {
             let updatedQuestion = question
             updatedQuestion++;
