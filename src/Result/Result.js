@@ -40,7 +40,7 @@ function Result() {
                     <div className="col-lg-8 mt-4">
                         <div className={ResultCss.resultInnerBg}>
                             {recieveItems && recieveItems.map((item, i) => <div className="row mb-2">
-                                <div className="col-12 col-lg-6">
+                                <div className="col-12 col-md-6">
                                     <div className={ResultCss.countingNumber}>
                                         <span className={ResultCss.span}>{i + 1}</span>
                                         <audio className={ResultCss.audio} controls >
@@ -51,7 +51,7 @@ function Result() {
                                                 </div> */}
                                     </div>
                                 </div>
-                                <div className="col-lg-6 my-auto">
+                                <div className="col-md-6 my-auto">
                                     <h5 className={item.correct == true ? ResultCss.greenColor : ResultCss.redColor}>{item.name}</h5>
                                 </div>
                             </div>

@@ -204,7 +204,7 @@ function Questions(props) {
                     </div>
                     <div className="row justify-content-center">
 
-                        <div className="col-md-3 mb-3">
+                        <div className="col-md-6 col-lg-3 mb-3">
                             <button
                                 disabled={isDisabled}
                                 onClick={() => answerChoosen(birds.birds[0], 0)}
@@ -216,7 +216,7 @@ function Questions(props) {
                                 {birds.birds[0].name}
                             </button>
                         </div>
-                        <div className="col-md-3 mb-3">
+                        <div className="col-md-6 col-lg-3 mb-3">
                             <button
                                 disabled={isDisabled}
 
@@ -229,7 +229,7 @@ function Questions(props) {
                         </div>
                     </div>
                     <div className="row justify-content-center">
-                        <div className="col-md-3 mb-3">
+                    <div className="col-md-6 col-lg-3 mb-3">
                             <button
                                 disabled={isDisabled}
 
@@ -242,7 +242,7 @@ function Questions(props) {
                                 {birds.birds[2].name}
                             </button>
                         </div>
-                        <div className="col-md-3 mb-3">
+                        <div className="col-md-6 col-lg-3 mb-3">
                             <button
                                 disabled={isDisabled}
 
