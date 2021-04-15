@@ -30,20 +30,22 @@ function HardQuestions() {
     const [isDisabled, setIsDisabled] = useState(false)
 
 
-    const randomGenerator = (randomIndexes) => {
-        let random = Math.floor(Math.random() * (19 - 0) + 0);
+    const randomGenerator = (randomIndexes, length) => {
+        let random = Math.floor(Math.random() * (length - 1) + 0);
         if (randomIndexes.includes(random)) {
-            randomGenerator(randomIndexes);
+            randomGenerator(randomIndexes, length);
         } else {
             randomIndexes.push(random)
         }
     }
 
-    const url = 'https://birds-app.herokuapp.com/api/get-question/';
+    // const url = 'https://birds-app.herokuapp.com/api/';
+    // const url = 'http://localhost:3002/api/';
+    const url = '/api/';
+
     const refs = useRef()
 
     useEffect(() => {
-        console.log(value)
         let timer = setTimeout(() => {
             let newValue = value;
             if (value == 0) {
@@ -83,12 +85,13 @@ function HardQuestions() {
 
     useEffect(() => {
         let randomIndexes = [];
+        let length = localStorage.getItem('length')
         for (let i = 0; i <= 9; i++) {
-            randomGenerator(randomIndexes);
+            randomGenerator(randomIndexes, length ? length : 20);
         }
         console.log(randomIndexes)
         setRandomIndexes(randomIndexes)
-        axios.get(`${url}${randomIndexes[question]}`)
+        axios.get(`${url}get-question/${randomIndexes[question]}`)
             .then(res => {
                 setBirds({
                     bird: res.data.data.question,
@@ -106,7 +109,7 @@ function HardQuestions() {
             let updatedQuestion = question
             updatedQuestion++;
             setQuestion(updatedQuestion)
-            axios.get(`${url}${randomIndexes[updatedQuestion]}`)
+            axios.get(`${url}get-question/${randomIndexes[updatedQuestion]}`)
                 .then(res => {
                     setIsDisabled(false)
                     setBirds({
@@ -185,7 +188,7 @@ function HardQuestions() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12">
-                            <h1>What is this Birds?</h1>
+                            <h1>Quel-est cet oiseau ?</h1>
                             <CircularProgressbar
                                 value={value}
                                 maxValue={20}

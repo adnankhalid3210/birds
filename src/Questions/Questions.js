@@ -20,10 +20,10 @@ function Questions(props) {
     let history = useHistory();
     const location = useLocation();
 
-    const randomGenerator = (randomIndexes) => {
-        let random = Math.floor(Math.random() * (19 - 0) + 0);
+    const randomGenerator = (randomIndexes, length) => {
+        let random = Math.floor(Math.random() * (length - 1) + 0);
         if (randomIndexes.includes(random)) {
-            randomGenerator(randomIndexes);
+            randomGenerator(randomIndexes, length);
         } else {
             randomIndexes.push(random)
         }
@@ -57,17 +57,21 @@ function Questions(props) {
     const [randomIndexes, setRandomIndexes] = useState('')
 
 
-    const url = 'https://birds-app.herokuapp.com/api/get-question/';
+    // const url = 'https://birds-app.herokuapp.com/api/';
+    const url = '/api/';
+    // const url = 'http://localhost:3002/api/';
+
     const refs = useRef()
 
     useEffect(() => {
+        let length = localStorage.getItem('length')
         let randomIndexes = [];
         for (let i = 0; i <= 9; i++) {
-            randomGenerator(randomIndexes);
+            randomGenerator(randomIndexes, length ? length : 20);
         }
         console.log(randomIndexes)
         setRandomIndexes(randomIndexes)
-        axios.get(`${url}${randomIndexes[question]}`)
+        axios.get(`${url}get-question/${randomIndexes[question]}`)
             .then(res => {
                 setBirds({
                     bird: res.data.data.question,
@@ -112,7 +116,7 @@ function Questions(props) {
             let updatedQuestion = question
             updatedQuestion++;
             setQuestion(updatedQuestion)
-            axios.get(`${url}${randomIndexes[updatedQuestion]}`)
+            axios.get(`${url}get-question/${randomIndexes[updatedQuestion]}`)
                 .then(res => {
                     setIsDisabled(false)
                     setSelection({
@@ -194,7 +198,7 @@ function Questions(props) {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-12">
-                            <h1>What is this Birds?</h1>
+                            <h1>Quel-est cet oiseau ?</h1>
                             <CircularProgressbar
                                 className={QuestionsCss.CircularProgressbar}
                                 value={value}
@@ -229,7 +233,7 @@ function Questions(props) {
                         </div>
                     </div>
                     <div className="row justify-content-center">
-                    <div className="col-md-6 col-lg-3 mb-3">
+                        <div className="col-md-6 col-lg-3 mb-3">
                             <button
                                 disabled={isDisabled}
 
