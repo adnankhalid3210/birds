@@ -1,6 +1,17 @@
+body {
+  margin: 0;
+  font-family: "TommySoftBold"
+}
+
+/* code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+
 .App {
   text-align: center;
     width: 100%;
+    font-family: "TommySoftBold" !important;
 }
 
 #root{
@@ -9,7 +20,7 @@
 
 .yellow-btn {
   border: 2px solid transparent;
-  background-color: #cccc00;
+  background-color: #e2c547;
   width: 200px;
   min-height: 50px;
   display: inline-flex;
@@ -17,16 +28,18 @@
   justify-content: center;
   font-size: 15px;
   font-weight: 600;
-  color: #000;
+  /* color: #000; */
   text-decoration: none;
   border-radius: 5px;
   text-decoration: none;
+  color: #5e7463;
+
 }
 
 .yellow-btn:hover, .yellow-btn:focus{
-  border: 2px solid #cccc00;
+  border: 2px solid #e2c547;
   background-color: transparent;
-  color: #cccc00;
+  color: #5e7463;
   text-decoration: none;
 }
 
@@ -40,7 +53,7 @@ body{
     width: 100%;
     height: 100%;
     background-attachment: fixed;
-    background-color: #ddd !important;
+    background-color: #c2ddc8 !important;
 }
 
 @media screen and (max-width: 767px) {
@@ -59,4 +72,31 @@ html{
 body{
   height: 100vh;
 }
+}
+
+.Homenew-game-bg{
+  
+  color: #5e7463;
+font-family: "TommySoftThin" !important;
+
+}
+
+.yellow-btn-home {
+display: flex;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  /* background-color: red; */
+  /* color: white; */
+  text-align: center;
+  text-decoration: none;
+
+}
+
+.nav-link-footer {
+  text-decoration: none;
 }

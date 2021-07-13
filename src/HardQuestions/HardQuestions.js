@@ -41,7 +41,9 @@ function HardQuestions() {
 
     // const url = 'https://birds-app.herokuapp.com/api/';
     // const url = 'http://localhost:3002/api/';
-    const url = '/api/';
+    // const url = '/api/';
+    const url = process.env.REACT_APP_URL ? process.env.REACT_APP_URL : 'http://109.106.244.123:8080/api/';
+
 
     const refs = useRef()
 

@@ -4,7 +4,7 @@
 }
 
 .CircularProgressbar .CircularProgressbar-path {
-    stroke: #cccc00;
+    stroke: #e2c547;
 }
 
 .CircularProgressbar .CircularProgressbar-text {
@@ -41,7 +41,7 @@ audio{
 }
 
 .yellowButton{
-    background-color: #cccc00 !important;
+    background-color: #e2c547 !important;
     border: 2px solid transparent;
 }
 

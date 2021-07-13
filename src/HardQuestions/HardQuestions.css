@@ -4,7 +4,7 @@
 }
 
 .CircularProgressbar .CircularProgressbar-path {
-    stroke: #cccc00;
+    stroke: #e2c547;
 }
 
 .CircularProgressbar .CircularProgressbar-text {
@@ -23,7 +23,7 @@
     padding-left: 15px;
     font-weight: 600;
     color: #000;
-    background-color: #cccc00;
+    background-color: #e2c547;
     border-radius: 4px;
     border: none;
 }

@@ -14,11 +14,16 @@ import HardQuestions from './HardQuestions/HardQuestions';
 import axios from 'axios';
 import Result from './Result/Result';
 import { useEffect } from 'react';
+import About from './About/About';
+import Legal from './Legal/Legal';
 
 function App() {
+  console.log(process.env.REACT_APP_URL)
   // const url = 'https://birds-app.herokuapp.com/api/';
-  const url = '/api/';
+  // const url = '/api/';
   // const url = 'http://localhost:3002/api/';
+  // const url = 'http://109.106.244.123:8080/api/'
+  const url = process.env.REACT_APP_URL ? process.env.REACT_APP_URL : 'http://109.106.244.123:8080/api/';
 
   useEffect(() => {
     axios.get(`${url}get-length`)
@@ -47,6 +52,12 @@ function App() {
           </Route>
           <Route path="/result" component={Result}>
             <Result />
+          </Route>
+          <Route path="/about" component={About}>
+            <About />
+          </Route>
+          <Route path="/legal" component={Legal}>
+            <Legal />
           </Route>
         </Switch>
       </div>
